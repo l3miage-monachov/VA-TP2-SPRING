@@ -10,8 +10,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-
-@AutoConfigureTestDatabase
+@AutoConfigureTestDatabase()
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
 public class UserRepositoryTest {
     @Autowired
@@ -34,9 +33,9 @@ public class UserRepositoryTest {
 
         userRepository.save(userEntity);
         userRepository.save(userEntity2);
-
         Set<UserEntity> userEntitiesResponses = userRepository.findAllByMailContaining("gmail");
 
+        //then
         assertThat(userEntitiesResponses).hasSize(1);
         assertThat(userEntitiesResponses.stream().findFirst().get().getMail()).isEqualTo("test@gmail.com");
     }
